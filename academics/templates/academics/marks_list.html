@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}Marks Records{% endblock %}
+{% block page_label %}Academics{% endblock %}
+{% block page_title %}Marks Records{% endblock %}
+
+{% block content %}
+<section class="space-y-6">
+
+  <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
+          Academic Summary
+        </p>
+
+        <h2 class="mt-1 text-xl font-semibold text-slate-900">
+          Review marks across subjects and exams
+        </h2>
+      </div>
+
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <a href="{% url 'add-marks' %}"
+          class="rounded-2xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">
+          Add Marks
+        </a>
+
+        <form method="get" class="flex flex-col gap-3 sm:flex-row sm:items-end">
+
+        <div>
+          <label for="subject" class="mb-2 block text-sm font-medium text-slate-700">
+            Subject
+          </label>
+
+          <select id="subject" name="subject"
+            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-slate-700 outline-none focus:border-slate-400">
+            <option value="">
+              All Subjects
+            </option>
+
+            {% for subject in subjects %}
+            <option value="{{ subject.id }}" {% if selected_subject == subject.id|stringformat:"s" %} selected {% endif %}>
+              {{ subject.name }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <label for="exam" class="mb-2 block text-sm font-medium text-slate-700">
+            Exam
+          </label>
+
+          <select id="exam" name="exam"
+            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-slate-700 outline-none focus:border-slate-400">
+            <option value="">
+              All Exams
+            </option>
+
+            {% for exam in exam_names %}
+            <option value="{{ exam }}" {% if selected_exam == exam %} selected {% endif %}>
+              {{ exam }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <button type="submit"
+            class="rounded-2xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">
+            Filter
+          </button>
+        </div>
+
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="overflow-hidden rounded-3xl border border-slate-200 shadow-sm">
+
+    <div class="overflow-x-auto">
+
+      <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+
+        <thead class="bg-slate-50 text-slate-600">
+          <tr>
+            <th class="px-5 py-3 font-semibold">
+              Student Name
+            </th>
+
+            <th class="px-5 py-3 font-semibold">
+              Subject
+            </th>
+
+            <th class="px-5 py-3 font-semibold">
+              Exam
+            </th>
+
+            <th class="px-5 py-3 font-semibold">
+              Marks
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y divide-slate-200 bg-white">
+
+          {% for mark in marks %}
+          <tr>
+
+            <td class="px-5 py-3 font-medium text-slate-900">
+              {{ mark.student.name }}
+            </td>
+
+            <td class="px-5 py-3">
+              {{ mark.subject.name }}
+            </td>
+
+            <td class="px-5 py-3">
+              {{ mark.exam_name }}
+            </td>
+
+            <td class="px-5 py-3">
+              {% widthratio mark.marks_obtained mark.full_marks 100 as percentage %}
+
+              <span class=" rounded-full px-2.5 py-1 text-xs font-semibold
+                                    {% if percentage >= 80 %}
+                                        bg-emerald-100 text-emerald-700
+                                    {% elif percentage >= 50 %}
+                                        bg-amber-100 text-amber-700
+                                    {% else %}
+                                        bg-rose-100 text-rose-700
+                                    {% endif %}
+                                ">
+                {{ mark.marks_obtained }}/{{ mark.full_marks }}
+              </span>
+            </td>
+
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="px-5 py-10 text-center text-slate-500">
+              No marks records found.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}
