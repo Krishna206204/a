@@ -21,6 +21,18 @@
             Class: {{ classroom.name }} - {{ classroom.section }}
         </p>
         {% endif %}
+
+
+        {% comment %} added manually {% endcomment %}
+
+        {% comment %} added to go back to the dashboard {% endcomment %}
+         {% comment %} better back button placement {% endcomment %}
+ <div class="flex justify-end rounded-2xl border border-slate-200 bg-white p-4">
+   <a href="{% url 'dashboard' %}"
+     class="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-white hover:bg-slate-800">
+          ← Back
+    </a>
+  </div>
     </div>
 
     <form method="post" class="space-y-5">
