@@ -311,11 +311,46 @@ def student_logout(request):
     return redirect("student-lookup")
 
 
+def student_assignment(request, student_id):
+    student = get_object_or_404(Student.objects.select_related("classroom"), pk=student_id)
+    assignment_list = (
+        Assignment.objects.filter(classroom=student.classroom)
+        .order_by("-created_at")
+    )
+    
+    
+    context={
+        "assignment_list":assignment_list,
+        "student":student,
+    }
+    
+    return render(request,"students/student_assignment.html",context)
 
 
 
+# def student_attendance(request, student_id):
+#     student = get_object_or_404(Student.objects.select_related("classroom"), pk=student_id)
+#     attendance_records = (
+#         Attendance.objects.filter(student=student)
+#         .order_by("-date")
+#     )
 
+#     present_days = attendance_records.filter(status="PRESENT").count()
+#     absent_days = attendance_records.filter(status="ABSENT").count()
+#     total_days = attendance_records.count()
+#     attendance_percentage = (
+#         round((present_days / total_days) * 100, 2) if total_days else 0
+#     )
 
+#     context = {
+#         "student": student,
+#         "attendance_records": attendance_records,
+#         "present_days": present_days,
+#         "absent_days": absent_days,
+#         "total_days": total_days,
+#         "attendance_percentage": attendance_percentage,
+#     }
+#     return render(request, "students/student_attendance.html", context)
 
 
 
