@@ -13,6 +13,9 @@
           <div>
             <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Student</p>
             <h2 class="mt-2 text-2xl font-semibold text-slate-900">{{ student.name }}</h2>
+            
+            <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Classroom</p>
+            <h2 class="mt-2 text-2xl font-semibold text-slate-900">{{ student.classroom }}</h2>
           </div>
           {% comment %} back button {% endcomment %}
          <a href="{% url 'student-dashboard' student_id=student.id %}" class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">
