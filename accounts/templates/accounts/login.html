@@ -35,26 +35,43 @@
         <button type="submit"
           class="w-full rounded-2xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white">Login</button>
       </form>
+
 {% comment %} Changed this below commented to  {% endcomment %}
        {% comment %} <p class="mt-6 text-center text-sm text-slate-500">If you are student <a href="{% url "student-lookup" %}"
           class="font-semibold text-sky-600 hover:text-sky-700">Login student</a></p>  {% endcomment %}
+          
+        <div class="mt-6 flex items-center justify-center gap-6">
+          <div class="mt-6 text-center">
+          <p class="text-slate-600">
+            Are you a Student
+          </p>
 
-         <div class="mt-6 text-center">
-     <p class="text-slate-600">
-        Are you a Student
+          <a href="{% url 'student-lookup' %}"
+            class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
+          <i class="fa-solid fa-user-tie mr-2"></i>
+            Student Login
+          </a>
+          </div> 
+
+        {% comment %} Added link of the dashboard in the login page {% endcomment %}
+        <div class="mt-6 text-center">
+        <p class="text-slate-600">
+        Dashboard
         </p>
 
-     <a href="{% url 'student-lookup' %}"
-       class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
-        <i class="fa-solid fa-user-tie mr-2"></i>
-        Student Login
-         </a>
+        <a href="{% url 'home' %}"
+         class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
+          <i class="fa-solid fa-user-tie mr-2"></i>
+          home
+           </a>
+          </div> 
         </div>
-    </div>
-  </div>
 
-  {% if messages %} {% for message in messages %}
-   <script>
+      </div>
+    </div>
+    
+    {% if messages %} {% for message in messages %}
+    <script>
       Swal.fire(
         {
           toast:true,
@@ -71,3 +88,38 @@
 
 </body>
 </html>
+
+
+
+
+
+
+          {% comment %} <div class="mt-6 flex items-center justify-center gap-6">
+      
+      <!-- Student Login -->
+      <div class="text-center">
+          <p class="text-slate-600">
+              Are you a Student?
+          </p>
+      
+          <a href="{% url 'student-lookup' %}"
+             class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
+              <i class="fa-solid fa-user mr-2"></i>
+              Student Login
+          </a>
+      </div>
+      
+      <!-- Home -->
+      <div class="text-center">
+          <p class="text-slate-600">
+              Dashboard
+          </p>
+      
+          <a href="{% url 'home' %}"
+             class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
+              <i class="fa-solid fa-house mr-2"></i>
+              Home
+          </a>
+      </div>
+      
+      </div> {% endcomment %}
