@@ -28,7 +28,6 @@ def student_login_required(view_func):
                 )
 
         return view_func(request, *args, **kwargs)
-
     return wrapper
 
 def student(request):
@@ -308,7 +307,8 @@ def student_report_card(request, student_id, exam_name=None):
 def student_logout(request):
     request.session.flush()     # Optional
     # return redirect("student-lookup")
-    return redirect("student-lookup")
+    # return redirect("student-lookup")
+    return redirect("home")
 
 
 def student_assignment(request, student_id):
