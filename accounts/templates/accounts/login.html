@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css" integrity="sha512-ApSLB1Pd3/bZN8fWB/RG9YhN/7bd9Hkf3AGaE2mPfebjrxagjuBtx2GcgdqIlJkUzwylBo61r9Xa9NmgBI0swA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <title>SMS</title>
 </head>
 
@@ -13,11 +15,37 @@
   <div class="flex min-h-[70vh] items-center justify-center">
     <div
       class="w-full max-w-md rounded-[2rem] border border-slate-200 bg-white/95 p-8 shadow-[0_30px_60px_-35px_rgba(15,23,42,0.4)]">
-      <div class="mb-8 text-center">
+      {% comment %} <div class="mb-8 text-center">
+        <a href="{% url 'home' %}"
+         class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
+          <i class="fa-solid fa-user-tie mr-2"></i>
+          home
+           </a>
         <h1 class="text-3xl font-semibold text-slate-900">Welcome Back</h1>
         <p class="mt-2 text-sm text-slate-500">Sign in to your account to continue.</p>
-      </div>
+      </div> {% endcomment %}
+      <div class="relative mb-8">
 
+    <!-- Home button -->
+    <a href="{% url 'home' %}"
+       class="absolute -left-6 -top-6 inline-flex items-center rounded-2xl bg-blue-600 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
+        <i class="fa-solid fa-house"></i>
+       
+    </a>
+
+    <!-- Center content -->
+    <div class="text-center pt-1">
+        <h1 class="text-3xl font-semibold text-slate-900">
+            Welcome Back
+        </h1>
+
+        <p class="mt-2 text-sm text-slate-500">
+            Sign in to your account to continue.
+        </p>
+    </div>
+
+</div>
+      
       <form action="" method="POST" class="space-y-5">
         {% csrf_token %}
         <label class="block">
@@ -39,7 +67,7 @@
 {% comment %} Changed this below commented to  {% endcomment %}
        {% comment %} <p class="mt-6 text-center text-sm text-slate-500">If you are student <a href="{% url "student-lookup" %}"
           class="font-semibold text-sky-600 hover:text-sky-700">Login student</a></p>  {% endcomment %}
-          
+
         <div class="mt-6 flex items-center justify-center gap-6">
           <div class="mt-6 text-center">
           <p class="text-slate-600">
@@ -54,7 +82,7 @@
           </div> 
 
         {% comment %} Added link of the dashboard in the login page {% endcomment %}
-        <div class="mt-6 text-center">
+        {% comment %} <div class="mt-6 text-center">
         <p class="text-slate-600">
         Dashboard
         </p>
@@ -64,7 +92,8 @@
           <i class="fa-solid fa-user-tie mr-2"></i>
           home
            </a>
-          </div> 
+          </div>  {% endcomment %}
+
         </div>
 
       </div>
@@ -89,37 +118,3 @@
 </body>
 </html>
 
-
-
-
-
-
-          {% comment %} <div class="mt-6 flex items-center justify-center gap-6">
-      
-      <!-- Student Login -->
-      <div class="text-center">
-          <p class="text-slate-600">
-              Are you a Student?
-          </p>
-      
-          <a href="{% url 'student-lookup' %}"
-             class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
-              <i class="fa-solid fa-user mr-2"></i>
-              Student Login
-          </a>
-      </div>
-      
-      <!-- Home -->
-      <div class="text-center">
-          <p class="text-slate-600">
-              Dashboard
-          </p>
-      
-          <a href="{% url 'home' %}"
-             class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
-              <i class="fa-solid fa-house mr-2"></i>
-              Home
-          </a>
-      </div>
-      
-      </div> {% endcomment %}
