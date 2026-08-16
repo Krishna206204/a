@@ -21,6 +21,7 @@ class Student(models.Model):
     )
     address = models.TextField(blank=True, null=True)
     phone = models.CharField(max_length=10, blank=True)
+    date_of_birth = models.DateField(default="2000-01-01")
 
     def __str__(self):
         return self.name

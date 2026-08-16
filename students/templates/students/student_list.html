@@ -57,6 +57,7 @@
             <th class="px-4 py-3 font-semibold">Name</th>
             <th class="px-4 py-3 font-semibold">Phone</th>
             <th class="px-4 py-3 font-semibold">Class</th>
+            <th class="px-4 py-3 font-semibold">Date of birth</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-200 bg-white">
@@ -67,6 +68,7 @@
             <td class="px-4 py-3 font-medium text-slate-900">{{student.name}}</td>
             <td class="px-4 py-3">{{student.phone}}</td>
             <td class="px-4 py-3">Grade {{student.classroom}}</td>
+            <td class="px-4 py-3"> {{student.date_of_birth}}</td>
           </tr>
           {% empty %}
           <p>No Records Found</p>

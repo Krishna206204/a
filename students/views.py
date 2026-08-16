@@ -74,12 +74,13 @@ def student_lookup(request):
     if request.method == "POST":
 
         student_id = request.POST.get("student_id")
-        phone = request.POST.get("phone")
+        # phone = request.POST.get("phone")
+        date_of_birth=request.POST.get("date_of_birth")
 
         try:
             student = Student.objects.get(
                 id=student_id,
-                phone=phone
+                date_of_birth=date_of_birth,
             )
             request.session["student_id"] = student.id
             return redirect(
@@ -93,7 +94,7 @@ def student_lookup(request):
                 request,
                 "students/student_lookup.html",
                 {
-                    "error_message": "Invalid Student ID or Phone Number."
+                    "error_message": "Invalid Student ID or Date of birth."
                 }
             )
 
