@@ -185,8 +185,8 @@ def report_card(request, student_id, exam_name):
         remarks = "Needs Improvement"
 
     context = {
-        "school_name": "XYZ School",
-        "school_address": "Chitwan, Nepal",
+        "school_name": "Jhime Malika Secondary School",
+        "school_address": "K.i singh 04, Doti",
         "report_title": "Report Card",
         "academic_session": "2026",
         "student": student,
@@ -204,7 +204,7 @@ def report_card(request, student_id, exam_name):
             if student.classroom.teacher
             else "Class Teacher"
         ),
-        "principal_name": "Prateek",
+        "principal_name": "Nar Bahadur Karki",
     }
 
     return render(request, "academics/report_card.html", context)

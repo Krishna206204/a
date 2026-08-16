@@ -294,7 +294,7 @@ def student_report_card(request, student_id, exam_name=None):
         "grade": grade,
         "result": result,
         "remarks": remarks,
-        "school_name": "Jhime Malika ",
+        "school_name": "Jhime Malika Secondary School ",
         "school_address": "K.i singh 04, doti",
         "report_title": "Report Card",
         "academic_session": "2026",
