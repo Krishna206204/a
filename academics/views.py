@@ -48,7 +48,7 @@ def add_marks(request):
     subjects = Subject.objects.filter(classroom=classroom)
     if request.method == "POST":
         subject_id = request.POST.get("subject")
-        exam_name = request.POST.get("exam_name")
+        exam_name = request.POST.get("exam_name", "").strip().title()
 
         if not subject_id or not exam_name:
             messages.error(request, "Subject and exam name are required..")

@@ -17,6 +17,11 @@ urlpatterns = [
         views.student_report_card,
         name="student-report-card",
     ),
+    path(
+    "portal/<int:student_id>/report-card/",
+    views.student_report_card,
+    name="student-report-card",
+),
     
 # Added manually
     path("accounts/logout/", views.student_logout, name="student-logout"), 

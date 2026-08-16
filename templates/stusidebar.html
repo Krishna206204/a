@@ -1,0 +1,197 @@
+<!-- Mobile Header -->
+<div class="flex items-center justify-between px-4 py-3 lg:hidden">
+
+    <!-- School Name -->
+    <a href="{% url 'home' %}"
+       class="text-lg font-semibold text-slate-900">
+        Jhime Malika Secondary School
+    </a>
+
+    <!-- Menu Button -->
+    <button
+        id="menu-btn"
+        class="rounded-lg bg-[#0e1a3a] px-4 py-3 text-white"
+        type="button">
+
+        <i class="fa-solid fa-bars text-xl"></i>
+
+    </button>
+
+</div>
+
+
+<!-- Mobile Overlay -->
+<div
+    id="menu-overlay"
+    class="fixed inset-0 z-40 hidden bg-black/40 lg:hidden">
+</div>
+
+
+<!-- Student Sidebar -->
+<aside
+    id="sidebar"
+    class="fixed inset-y-0 left-0 z-50 hidden w-72 bg-[#0e1a3a] p-0 text-slate-100 shadow-2xl lg:flex lg:w-72 lg:flex-col lg:justify-between">
+
+    <div>
+
+        <!-- Sidebar Header -->
+        <div class="border-b border-white/10 px-6 py-6">
+
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">
+                School Portal
+            </p>
+
+            <div class="mt-4 flex items-center gap-3">
+
+                <div
+                    class="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-lg font-semibold">
+
+                    S
+
+                </div>
+
+                <div>
+
+                    <p class="font-semibold">
+                        Student Panel
+                    </p>
+
+                    <p class="text-sm text-slate-400">
+                        Academic Management
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Sidebar Navigation -->
+        <nav class="mt-6 space-y-2 px-3">
+
+            
+            <a
+                href="{% url 'student-dashboard' student_id=student.id %}"
+                class="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 text-white transition hover:bg-white/15">
+
+                <span class="text-base">
+                    <i class="fa-solid fa-file-signature"></i>
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+            
+            <a
+                href="{% url 'student-attendance' student_id=student.id %}"
+                class="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 text-white transition hover:bg-white/15">
+
+                <span class="text-base">
+                    <i class="fa-solid fa-file-signature"></i>
+                </span>
+
+                <span>
+                    Student Attendance
+                </span>
+
+            </a>
+            <a
+                href="{% url 'student-assignment' student_id=student.id %}"
+                class="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 text-white transition hover:bg-white/15">
+
+                <span class="text-base">
+                    <i class="fa-solid fa-file-signature"></i>
+                </span>
+
+                <span>
+                    Student Assignment
+                </span>
+
+            </a>
+            <a
+                href="{% url 'student-marks' student_id=student.id %}"
+                class="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 text-white transition hover:bg-white/15">
+
+                <span class="text-base">
+                    <i class="fa-solid fa-file-signature"></i>
+                </span>
+
+                <span>
+                    Marks
+                </span>
+
+            </a>
+            <a
+                href="{% url 'student-report-card' student_id=student.id %}"
+                class="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 text-white transition hover:bg-white/15">
+
+                <span class="text-base">
+                    <i class="fa-solid fa-file-signature"></i>
+                </span>
+
+                <span>
+                    Report Card
+                </span>
+
+            </a>
+            {% comment %} <a href="{% url 'student-logout' %}"
+                class="inline-flex items-center rounded-2xl bg-red-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-red-700">
+                <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                Logout
+            </a> {% endcomment %}
+        
+
+        <div class="border-t border-white/10 p-3">
+
+                <a href="{% url "student-logout" %}"
+                class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-300 transition hover:bg-red-500/20 hover:text-red-300">
+
+                 <span class="text-base">
+                      <i class="fa-solid fa-right-from-bracket"></i>
+                    </span>
+
+                 <span>
+                        Logout
+            </span>
+
+              </a>
+
+        </div>
+
+        </nav>
+
+    </div>
+
+
+</aside>
+
+
+<!-- Responsive Sidebar JavaScript -->
+<script>
+
+    const menuBtn = document.getElementById("menu-btn");
+    const sidebar = document.getElementById("sidebar");
+    const menuOverlay = document.getElementById("menu-overlay");
+
+
+    // Open sidebar
+    menuBtn.addEventListener("click", function () {
+
+        sidebar.classList.remove("hidden");
+        menuOverlay.classList.remove("hidden");
+
+    });
+
+
+    // Close sidebar
+    menuOverlay.addEventListener("click", function () {
+
+        sidebar.classList.add("hidden");
+        menuOverlay.classList.add("hidden");
+
+    });
+
+</script>
