@@ -12,31 +12,25 @@
 </head>
 
 <body>
-  <div class="flex min-h-[70vh] items-center justify-center">
+  <div class="flex min-h-screen items-center justify-center">
     <div
       class="w-full max-w-md rounded-[2rem] border border-slate-200 bg-white/95 p-8 shadow-[0_30px_60px_-35px_rgba(15,23,42,0.4)]">
-      {% comment %} <div class="mb-8 text-center">
-        <a href="{% url 'home' %}"
-         class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
-          <i class="fa-solid fa-user-tie mr-2"></i>
-          home
-           </a>
-        <h1 class="text-3xl font-semibold text-slate-900">Welcome Back</h1>
-        <p class="mt-2 text-sm text-slate-500">Sign in to your account to continue.</p>
-      </div> {% endcomment %}
       <div class="relative mb-8">
 
     <!-- Home button -->
-    <a href="{% url 'home' %}"
-       class="absolute -left-6 -top-6 inline-flex items-center rounded-2xl bg-blue-600 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
-        <i class="fa-solid fa-house"></i>
-       
-    </a>
+    <a href="{% url 'home' %}" 
+      class="absolute -top-10 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"> 
+      <p>Home</p> 
+      <i class="fa-solid fa-house"></i> 
+  </a>
 
     <!-- Center content -->
     <div class="text-center pt-1">
         <h1 class="text-3xl font-semibold text-slate-900">
             Welcome Back
+        </h1>
+        <h1 class="text-2xl font-semibold text-slate-800">
+          Teacher Portal
         </h1>
 
         <p class="mt-2 text-sm text-slate-500">
@@ -51,22 +45,19 @@
         <label class="block">
           <span class="mb-2 block text-sm font-medium text-slate-700">Username</span>
           <input type="text" name="username" placeholder="Enter your username"
-            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"  required/>
         </label>
 
         <label class="block">
           <span class="mb-2 block text-sm font-medium text-slate-700">Password</span>
           <input type="password" name="password" placeholder="Enter your password"
-            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"  required/ >
         </label>
 
         <button type="submit"
           class="w-full rounded-2xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 focus:ring-offset-white">Login</button>
       </form>
 
-{% comment %} Changed this below commented to  {% endcomment %}
-       {% comment %} <p class="mt-6 text-center text-sm text-slate-500">If you are student <a href="{% url "student-lookup" %}"
-          class="font-semibold text-sky-600 hover:text-sky-700">Login student</a></p>  {% endcomment %}
 
         <div class="mt-6 flex items-center justify-center gap-6">
           <div class="mt-6 text-center">
@@ -80,22 +71,9 @@
             Student Login
           </a>
           </div> 
-
-        {% comment %} Added link of the dashboard in the login page {% endcomment %}
-        {% comment %} <div class="mt-6 text-center">
-        <p class="text-slate-600">
-        Dashboard
-        </p>
-
-        <a href="{% url 'home' %}"
-         class="mt-3 inline-flex items-center rounded-2xl bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-blue-700">
-          <i class="fa-solid fa-user-tie mr-2"></i>
-          home
-           </a>
-          </div>  {% endcomment %}
-
+          
         </div>
-
+        
       </div>
     </div>
     
@@ -118,3 +96,11 @@
 </body>
 </html>
 
+
+
+
+
+
+
+          
+                  
