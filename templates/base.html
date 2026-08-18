@@ -66,11 +66,11 @@
           <div>
 
             <p class="text-sm font-semibold text-slate-800">
-              {{ request.user.username }}
+              {{ request.user.username|capfirst }}
             </p>
 
             <p class="text-xs text-slate-500">
-              {{ request.user.role }}
+              {{ request.user.role|capfirst }}
             </p>
 
           </div>
