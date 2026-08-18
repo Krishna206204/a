@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.urls import reverse
-from .models import Assignment, Marks, Subject
+from .models import Assignment, Marks, Subject,Notice
 from students.models import ClassRoom, Student
 
 
@@ -36,6 +36,24 @@ def assignment_list(request):
     )
     return render(
         request, "academics/assignment_list.html", {"assignments": assignments}
+    )
+
+
+
+def notice_list(request):
+
+    notices = (
+        Notice.objects
+        .all()
+        .order_by("-created_at")
+    )
+
+    return render(
+        request,
+        "academics/notice_list.html",
+        {
+            "notice_list": notices
+        }
     )
 
 

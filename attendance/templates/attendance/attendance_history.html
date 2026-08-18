@@ -1,97 +1,217 @@
-{% extends 'base.html' %} {% block title %}Attendance History{% endblock %} {%
-block page_label %}Attendance {% block page_title %}History
-Records{% endblock %} {% block content %}
+{% extends 'base.html' %}
+
+{% block title %}Attendance History{% endblock %}
+
+{% block page_label %}Attendance{% endblock %}
+
+{% block page_title %}History Records{% endblock %}
+
+{% block content %}
+
 <div class="space-y-6">
+
   <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-    <div
-      class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
-    >
+
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+
+      <!-- Heading -->
       <div>
-        <h2 class="text-lg font-semibold text-slate-900">Filter Attendance</h2>
+        <h2 class="text-lg font-semibold text-slate-900">
+          Filter Attendance
+        </h2>
+
         <p class="text-sm text-slate-500">
           Choose a date range to view past records.
         </p>
       </div>
-      {% comment %} New button added {% endcomment %}
-      <div class="rounded-2xl border border-slate-200 bg-white p-4">
-       <a href="{% url 'attendance' %}"
-         class="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-white hover:bg-slate-800">
-         ← Back
-        </a>
-      </div>
-      <form method="get">
-        <div class="grid gap-4 md:grid-cols-2">
+
+      <!-- Filter Form -->
+      <form method="get" id="attendanceFilterForm">
+
+        <div class="grid gap-4 md:grid-cols-3 md:items-end">
+
+          <!-- From Date -->
           <div>
             <label
               for="from"
               class="mb-2 block text-sm font-medium text-slate-700"
-              >From</label
             >
+              From
+            </label>
+
             <input
               id="from"
               type="date"
               name="from"
               value="{{ from_date }}"
+              min="0001-01-01"
+              max="9999-12-31"
               class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3"
             />
           </div>
+
+          <!-- To Date -->
           <div>
             <label
               for="to"
               class="mb-2 block text-sm font-medium text-slate-700"
-              >To</label
             >
+              To
+            </label>
+
             <input
               id="to"
               type="date"
               name="to"
               value="{{ to_date }}"
+              min="0001-01-01"
+              max="9999-12-31"
               class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3"
             />
           </div>
+
+          <!-- Filter and Reset Buttons -->
+          <div class="flex gap-3">
+
+            <!-- Filter -->
+            <button
+              type="submit"
+              class="h-[50px] flex-1 rounded-2xl border border-blue-700 bg-blue-600 px-6 font-bold text-white shadow-sm transition hover:border-blue-800 hover:bg-blue-700"
+            >
+              Filter
+            </button>
+
+            <!-- Reset -->
+            <a
+              href="?"
+              class="flex h-[50px] flex-1 items-center justify-center rounded-2xl border border-slate-300 bg-white px-6 font-bold text-slate-700 shadow-sm transition hover:border-slate-400 hover:bg-slate-100"
+            >
+              Reset
+            </a>
+
+          </div>
+
         </div>
-        <button type="submit">Filter</button>
+
       </form>
+
     </div>
+
   </div>
 
+
+  <!-- Attendance Table -->
   <div class="overflow-hidden rounded-2xl border border-slate-200">
+
     <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+
       <thead class="bg-slate-50 text-slate-600">
         <tr>
           <th class="px-4 py-3 font-semibold">Date</th>
-          {% comment %} Added Student Name later {% endcomment %} {% comment %}
-          <th class="px-4 py-3 font-semibold">Student_Name</th>
-          {% endcomment %}
           <th class="px-4 py-3 font-semibold">Class</th>
           <th class="px-4 py-3 font-semibold">Present</th>
           <th class="px-4 py-3 font-semibold">Absent</th>
-          {% comment %} added percentage {% endcomment %}
-          <td class="px-4 py-3">Attendance in %</td>
+          <th class="px-4 py-3 font-semibold">Attendance in %</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-slate-200 bg-white">
-        {% for attendance in attendance_records %}
-        <tr>
-          <td class="px-4 py-3">{{ attendance.date }}</td>
-          {% comment %} Added student Details later {% endcomment %} 
-          {% comment %} <td class="px-4 py-3">{{ attendance.student__name }}</td> {% endcomment %}
-         
-          <td class="px-4 py-3">
-            {{ attendance.student__classroom__name }} - {{attendance.student__classroom__section }}
- 
-          </td>
-          <td class="px-4 py-3">{{ attendance.present_count }}</td>
-          <td class="px-4 py-3">{{ attendance.absent_count }}</td>
 
-          {% comment %} added percentage of a day {% endcomment %}
-         <td class="px-4 py-3">
-         {{ attendance.attendance_percentage }}%
-        </td>
-      </tr>
+      <tbody class="divide-y divide-slate-200 bg-white">
+
+        {% for attendance in attendance_records %}
+
+        <tr>
+
+          <td class="px-4 py-3">
+            {{ attendance.date }}
+          </td>
+
+          <td class="px-4 py-3">
+            {{ attendance.student__classroom__name }} -
+            {{ attendance.student__classroom__section }}
+          </td>
+
+          <td class="px-4 py-3">
+            {{ attendance.present_count }}
+          </td>
+
+          <td class="px-4 py-3">
+            {{ attendance.absent_count }}
+          </td>
+
+          <td class="px-4 py-3">
+            {{ attendance.attendance_percentage }}%
+          </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+          <td colspan="5" class="px-4 py-6 text-center text-slate-500">
+            No attendance records found.
+          </td>
+        </tr>
+
         {% endfor %}
+
       </tbody>
+
     </table>
+
   </div>
+
 </div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("attendanceFilterForm");
+    const fromInput = document.getElementById("from");
+    const toInput = document.getElementById("to");
+
+    form.addEventListener("submit", function (event) {
+
+      const fromDate = fromInput.value;
+      const toDate = toInput.value;
+
+      // Check browser validation
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        form.reportValidity();
+        return;
+      }
+
+      // Check year is maximum 4 digits
+      if (fromDate) {
+        const fromYear = fromDate.split("-")[0];
+
+        if (fromYear.length !== 4 || Number(fromYear) > 9999) {
+          event.preventDefault();
+          alert("From date year must contain exactly 4 digits.");
+          return;
+        }
+      }
+
+      if (toDate) {
+        const toYear = toDate.split("-")[0];
+
+        if (toYear.length !== 4 || Number(toYear) > 9999) {
+          event.preventDefault();
+          alert("To date year must contain exactly 4 digits.");
+          return;
+        }
+      }
+
+      // From date cannot be later than To date
+      if (fromDate && toDate && fromDate > toDate) {
+        event.preventDefault();
+        alert("From date cannot be later than To date.");
+      }
+
+    });
+
+  });
+</script>
+
 {% endblock %}
