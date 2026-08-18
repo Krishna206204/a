@@ -26,6 +26,13 @@ urlpatterns = [
 # Added manually
     path("accounts/logout/", views.student_logout, name="student-logout"), 
     path("portal/<int:student_id>/assignment/",views.student_assignment,name="student-assignment"),
+    
+# notice
+    path(
+        "student/<int:student_id>/notice/",
+        views.student_notice,
+        name="student-notice"
+    ),
 ]
 
 # the teacher logout is changed to the teacher_logout to the views.py 

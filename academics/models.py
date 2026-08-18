@@ -69,3 +69,16 @@ class Marks(models.Model):
     class Meta:
         verbose_name = "Mark"
         verbose_name_plural = "Marks"
+
+
+class Notice(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = "Notice"
+        verbose_name_plural = "Notices"

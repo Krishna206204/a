@@ -18,6 +18,36 @@
 
 {% block content %}
 
+
+<div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">Academic Overview</p>
+        <h2 class="mt-1 text-xl font-semibold text-slate-900">Monitor classroom performance</h2>
+      </div>
+
+      <form method="get" class="flex flex-col gap-3 sm:flex-row sm:items-end">
+       
+        <div>
+          <label for="exam" class="mb-2 block text-sm font-medium text-slate-700">Filter by Exam</label>
+          <select id="exam" name="exam"
+            class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-slate-700 outline-none focus:border-slate-400">
+            <option value="">All Exams</option>
+            {% for exam in available_exams %}
+            <option value="{{ exam }}" {% if selected_exam == exam %} selected {% endif %}>{{ exam }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <button type="submit"
+            class="rounded-2xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">
+            Apply
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 <div class="space-y-6">
 
 

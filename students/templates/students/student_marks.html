@@ -15,13 +15,15 @@
 {% block content %}
 
 <div class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-slate-100">
-    
+
     <div class="mx-auto max-w-6xl space-y-6">
+
 
         <!-- Student Header -->
         <div class="flex flex-col gap-3 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
 
             <div>
+
                 <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
                     Student
                 </p>
@@ -29,7 +31,109 @@
                 <h2 class="mt-2 text-2xl font-semibold text-slate-900">
                     {{ student.name }}
                 </h2>
+
             </div>
+
+        </div>
+
+
+        <!-- Search and Filter -->
+        <div class="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm">
+
+            <form method="get"
+                  class="flex flex-col gap-4 md:flex-row md:items-end">
+
+
+                <!-- Search Subject -->
+                <div class="flex-1">
+
+                    <label
+                        for="search"
+                        class="mb-2 block text-sm font-semibold text-slate-700"
+                    >
+                        Search Subject
+                    </label>
+
+                    <input
+                        type="text"
+                        id="search"
+                        name="search"
+                        value="{{ search_query }}"
+                        placeholder="Search subject..."
+                        class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-500"
+                    >
+
+                </div>
+
+
+                <!-- Select Exam -->
+                <div class="flex-1">
+
+                    <label
+                        for="exam"
+                        class="mb-2 block text-sm font-semibold text-slate-700"
+                    >
+                        Select Term
+                    </label>
+
+                    <select
+                        id="exam"
+                        name="exam"
+                        class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-slate-500"
+                    >
+
+                        <!-- All Terms -->
+                        <option value="">
+                            All Terms
+                        </option>
+
+
+                        <!-- Available Terms -->
+                        {% for exam in available_exams %}
+
+                            <option
+                                value="{{ exam }}"
+                                {% if selected_exam == exam %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ exam }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- Search Button -->
+                <div>
+
+                    <button
+                        type="submit"
+                        class="w-full rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white transition hover:bg-slate-700 md:w-auto"
+                    >
+                        Search
+                    </button>
+
+                </div>
+
+
+                <!-- Reset Button -->
+                <div>
+
+                    <a
+                        href="{% url 'student-marks' student.id %}"
+                        class="block w-full rounded-xl border border-slate-300 px-6 py-3 text-center font-semibold text-slate-700 transition hover:bg-slate-100 md:w-auto"
+                    >
+                        Reset
+                    </a>
+
+                </div>
+
+            </form>
+
         </div>
 
 
@@ -39,6 +143,7 @@
             <div class="overflow-x-auto">
 
                 <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+
 
                     <!-- Table Header -->
                     <thead class="bg-slate-50 text-slate-600">
@@ -77,32 +182,39 @@
 
                         <tr class="transition hover:bg-slate-50">
 
+
                             <!-- Subject -->
-                            <td class="px-5 py-3 font-medium text-slate-900">
+                            <td class="px-5 py-4 font-medium text-slate-900">
                                 {{ row.subject }}
                             </td>
 
+
                             <!-- Exam -->
-                            <td class="px-5 py-3">
+                            <td class="px-5 py-4">
                                 {{ row.exam_name }}
                             </td>
 
+
                             <!-- Obtained Marks -->
-                            <td class="px-5 py-3">
+                            <td class="px-5 py-4">
                                 {{ row.marks_obtained }}
                             </td>
 
+
                             <!-- Full Marks -->
-                            <td class="px-5 py-3">
+                            <td class="px-5 py-4">
                                 {{ row.full_marks }}
                             </td>
 
+
                             <!-- Percentage -->
-                            <td class="px-5 py-3">
+                            <td class="px-5 py-4 font-medium">
                                 {{ row.percentage }}%
                             </td>
 
+
                         </tr>
+
 
                         {% empty %}
 
@@ -110,9 +222,10 @@
 
                             <td
                                 colspan="5"
-                                class="px-5 py-6 text-center text-slate-500"
+                                class="px-5 py-10 text-center text-slate-500"
                             >
-                                No marks found for this student.
+                                No marks found matching your search.
+
                             </td>
 
                         </tr>
@@ -126,6 +239,7 @@
             </div>
 
         </div>
+
 
     </div>
 

@@ -137,6 +137,19 @@
                 </span>
 
             </a>
+            <a
+                href="{% url 'student-notice' student_id=student.id %}"
+                class="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 text-white transition hover:bg-white/15">
+
+                <span class="text-base">
+                    <i class="fa-regular fa-bell"></i>
+                </span>
+
+                <span>
+                    Notice
+                </span>
+
+            </a>
             {% comment %} <a href="{% url 'student-logout' %}"
                 class="inline-flex items-center rounded-2xl bg-red-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-red-700">
                 <i class="fa-solid fa-right-from-bracket mr-2"></i>

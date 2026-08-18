@@ -57,17 +57,6 @@
 
             </div>
 
-
-            <!-- Report Card Button -->
-            <div>
-
-                <a href="{% url 'student-report-card' student_id=student.id exam_name=report_exam %}" class="rounded-2xl border border-emerald-200 bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
-              View Report Card
-            </a>
-                
-
-            </div>
-
         </div>
 
     </div>
@@ -204,7 +193,7 @@
 
 
         <!-- Report Card -->
-        <a
+        {% comment %} <a
             href="{% url 'student-report-card' student_id=student.id exam_name=report_exam %}"
             class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
 
@@ -232,7 +221,7 @@
 
             </div>
 
-        </a>
+        </a> {% endcomment %}
 
 
         <!-- Assignment -->
@@ -259,6 +248,35 @@
                     class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
 
                     <i class="fa-solid fa-file-signature"></i>
+
+                </div>
+
+            </div>
+
+        </a>
+        <a
+            href="{% url 'student-notice' student_id=student.id %}"
+            class="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+
+            <div class="flex items-center justify-between">
+
+                <div>
+
+                    <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
+                       View Notice 
+                    </p>
+
+                    <h3 class="mt-2 text-xl font-semibold text-slate-900">
+                       Notice
+                    </h3>
+
+                </div>
+
+
+                <div
+                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">
+
+                    <i class="fa-regular fa-bell"></i>
 
                 </div>
 
