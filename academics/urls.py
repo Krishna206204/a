@@ -1,12 +1,3 @@
-# from django.urls import path
-# from . import views
-# urlpatterns = [
-#     path("assig
-    # path(nments/list/", views.assignments_list, name="assignment-list"),
-#     path("assignments/add/", views.add_assignment, name="add-assignment"),
-#     path("marks/add/",views.add_marks,name="add-marks")
-    
-# ]
 
 from django.urls import path
 from . import views
