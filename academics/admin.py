@@ -19,7 +19,18 @@ class SubjectAdmin(admin.ModelAdmin):
     )
     
     
-admin.site.register(Assignment)
+# admin.site.register(Assignment)
+@admin.register(Assignment)
+class AssignmentAdmin(admin.ModelAdmin):
+    list_display=(
+        'title',
+        'description',
+        'subject',
+        'classroom',
+        'created_at',
+    )
+
+
 @admin.register(Marks)
 class MarksAdmin(admin.ModelAdmin):
     list_display = (
@@ -31,4 +42,12 @@ class MarksAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Notice)
+# admin.site.register(Notice)
+@admin.register(Notice)
+class NoticeAdmin(admin.ModelAdmin):
+    list_display=(
+        'title',
+        'description',
+        'created_at',
+        
+    )
