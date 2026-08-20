@@ -30,23 +30,72 @@ def student_login_required(view_func):
         return view_func(request, *args, **kwargs)
     return wrapper
 
-def student(request):
-    classroom = ClassRoom.objects.filter(teacher=request.user).first()
-    student_count = 0
-    subject_count = 0
+# def student(request):
+#     classroom = ClassRoom.objects.filter(teacher=request.user).first()
+#     student_count = 0
+#     subject_count = 0
 
-    students = Student.objects.filter(classroom=classroom)
+#     students = Student.objects.filter(classroom=classroom)
+
+#     if classroom:
+#         student_count = classroom.students.count()
+#         subject_count = Subject.objects.filter(classroom=classroom).count()
+
+#     context = {
+#         "classroom": classroom,
+#         "student_count": student_count,
+#         "subject_count": subject_count,
+#         "students": students,
+#     }
+#     return render(request, "students/student_list.html", context)
+
+
+
+
+def student(request):
+    # Get the classroom assigned to the logged-in teacher
+    classroom = ClassRoom.objects.filter(
+        teacher=request.user
+    ).first()
+
+    # Start with students from this classroom only
+    students = Student.objects.none()
 
     if classroom:
-        student_count = classroom.students.count()
-        subject_count = Subject.objects.filter(classroom=classroom).count()
+        students = Student.objects.filter(
+            classroom=classroom
+        )
+
+    # Get search text from URL
+    search = request.GET.get("search", "").strip()
+
+    # Filter ONLY by student name
+    if search:
+        students = students.filter(
+            name__icontains=search
+        )
+
+    # Get total student count for the class
+    if classroom:
+        student_count = Student.objects.filter(
+            classroom=classroom
+        ).count()
+
+        subject_count = Subject.objects.filter(
+            classroom=classroom
+        ).count()
+    else:
+        student_count = 0
+        subject_count = 0
 
     context = {
         "classroom": classroom,
+        "students": students,
         "student_count": student_count,
         "subject_count": subject_count,
-        "students": students,
+        "search": search,
     }
+
     return render(request, "students/student_list.html", context)
 
 
