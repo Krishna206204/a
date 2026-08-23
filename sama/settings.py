@@ -128,3 +128,7 @@ AUTH_USER_MODEL="accounts.User"
 STATIC_URL = 'static/'
 
 LOGIN_URL="/"
+
+
+# added to logout after closing browser
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
