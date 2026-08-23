@@ -33,6 +33,30 @@ urlpatterns = [
         views.student_notice,
         name="student-notice"
     ),
+    
+     path(
+        "admin/students/",
+        views.admin_students,
+        name="admin-students"
+    ),
+    
+    
+    path(
+        "admin/report-cards/",
+        views.admin_report_cards,
+        name="admin-report-cards"
+    ),
+    path(
+        "portal/<int:student_id>/report-card/",
+        views.student_report_card,
+        name="student-report-card"
+    ),
+    path(
+        "admin/report-cards/<int:student_id>/",
+        views.admin_student_report_card,
+        name="admin-student-report-card"
+        ),
+    
 ]
 
 # the teacher logout is changed to the teacher_logout to the views.py 
