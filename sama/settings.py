@@ -132,3 +132,22 @@ LOGIN_URL="/"
 
 # added to logout after closing browser
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+JAZZMIN_SETTINGS = {
+
+    # Browser tab title
+    "site_title": "SAMS Admin",
+
+    # Main header/sidebar title
+    "site_header": "SAMS Administration",
+
+    # Brand name
+    "site_brand": "Jhime Secondary School",
+
+    # Welcome message on dashboard
+    "welcome_sign": "Welcome to SAMS Administration",
+
+    # Footer copyright
+    "copyright": "Jhime",
+}

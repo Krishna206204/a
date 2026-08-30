@@ -86,7 +86,7 @@
                         >
                             {{ classroom.name }}
                             {% if classroom.section %}
-                                - {{ classroom.section }}
+                                - {{ classroom.section | title }}
                             {% endif %}
                         </option>
 
@@ -121,7 +121,7 @@
                                 selected
                             {% endif %}
                         >
-                            {{ exam }}
+                            {{ exam | title}}
                         </option>
 
                         {% endfor %}
@@ -221,7 +221,7 @@
                             </td>
 
                             <td class="px-5 py-4">
-                                {{ student.classroom.section }}
+                                {{ student.classroom.section | title }}
                             </td>
 
                             <td class="px-5 py-4 text-right">
