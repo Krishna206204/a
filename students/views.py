@@ -6,6 +6,7 @@ from academics.models import Assignment, Marks, Subject,Notice
 from attendance.models import Attendance
 from students.models import ClassRoom, Student
 from accounts.models import User
+from django.contrib import messages
 
 
 # recommend by chatgpt
@@ -30,27 +31,6 @@ def student_login_required(view_func):
 
         return view_func(request, *args, **kwargs)
     return wrapper
-
-# def student(request):
-#     classroom = ClassRoom.objects.filter(teacher=request.user).first()
-#     student_count = 0
-#     subject_count = 0
-
-#     students = Student.objects.filter(classroom=classroom)
-
-#     if classroom:
-#         student_count = classroom.students.count()
-#         subject_count = Subject.objects.filter(classroom=classroom).count()
-
-#     context = {
-#         "classroom": classroom,
-#         "student_count": student_count,
-#         "subject_count": subject_count,
-#         "students": students,
-#     }
-#     return render(request, "students/student_list.html", context)
-
-
 
 
 def student(request):
@@ -100,26 +80,6 @@ def student(request):
     return render(request, "students/student_list.html", context)
 
 
-# def student_lookup(request):
-#     if request.method == "POST":
-#         student_id = request.POST.get("student_id", "").strip()
-#         if student_id.isdigit():
-#             student = Student.objects.filter(pk=int(student_id)).first()
-#             if student:
-#                 return redirect("student-dashboard", student_id=student.pk)
-
-#         return render(
-#             request,
-#             "students/student_lookup.html",
-#             {
-#                 "error_message": "No student found with that Student ID. Please try again."
-#             },
-#         )
-
-#     return render(request, "students/student_lookup.html")
-
-
-
 def student_lookup(request):
     if request.method == "POST":
 
@@ -151,54 +111,6 @@ def student_lookup(request):
     return render(request, "students/student_lookup.html")
 
 
-# login required
-
-# @student_login_required
-# def student_dashboard(request, student_id):
-#     student = get_object_or_404(
-#         Student.objects.select_related("classroom"),
-#         pk=student_id,
-#     )
-
-#     marks_qs = Marks.objects.filter(student=student).select_related("subject")
-#     attendance_qs = Attendance.objects.filter(student=student)
-
-#     total_full_marks = sum(mark.full_marks or 0 for mark in marks_qs)
-#     total_obtained_marks = sum(mark.marks_obtained or 0 for mark in marks_qs)
-#     overall_percentage = (
-#         round((total_obtained_marks / total_full_marks) * 100, 2)
-#         if total_full_marks
-#         else 0
-#     )
-
-#     present_days = attendance_qs.filter(status="PRESENT").count()
-#     total_days = attendance_qs.count()
-#     attendance_percentage = (
-#         round((present_days / total_days) * 100, 2) if total_days else 0
-#     )
-
-#     subject_count = Subject.objects.filter(classroom=student.classroom).count()
-#     assignment_count = Assignment.objects.filter(classroom=student.classroom).count()
-#     report_exam = (
-#         marks_qs.values_list("exam_name", flat=True)
-#         .distinct()
-#         .order_by("exam_name")
-#         .first()
-#         or "Mid-Term"
-#     )
-
-#     context = {
-#         "student": student,
-#         "student_id": student.id,
-#         "classroom": student.classroom,
-#         "overall_percentage": overall_percentage,
-#         "attendance_percentage": attendance_percentage,
-#         "subject_count": subject_count,
-#         "assignment_count": assignment_count,
-#         "report_exam": report_exam,
-#     }
-#     return render(request, "students/student_dashboard.html", context)
-
 @student_login_required
 def student_dashboard(request, student_id):
 
@@ -214,9 +126,7 @@ def student_dashboard(request, student_id):
 
     attendance_qs = Attendance.objects.filter(student=student)
 
-
     # GET THE LATEST EXAM
-
     latest_exam = (
         Marks.objects.filter(student=student)
         .order_by("-id")
@@ -224,9 +134,8 @@ def student_dashboard(request, student_id):
         .first()
     )
 
-    # -----------------------------------------
     # CALCULATE PERCENTAGE FOR LATEST EXAM ONLY
-    # -----------------------------------------
+
 
     if latest_exam:
 
@@ -257,9 +166,6 @@ def student_dashboard(request, student_id):
     else:
         overall_percentage = 0
 
-    # -----------------------------------------
-    # ATTENDANCE
-    # -----------------------------------------
 
     present_days = attendance_qs.filter(status="PRESENT").count()
 
@@ -271,17 +177,9 @@ def student_dashboard(request, student_id):
         else 0
     )
 
-    # -----------------------------------------
-    # SUBJECTS
-    # -----------------------------------------
-
     subject_count = Subject.objects.filter(
         classroom=student.classroom
     ).count()
-
-    # -----------------------------------------
-    # ASSIGNMENTS
-    # -----------------------------------------
 
     assignment_count = Assignment.objects.filter(
         classroom=student.classroom
@@ -290,9 +188,6 @@ def student_dashboard(request, student_id):
     # Latest exam for report card
     report_exam = latest_exam or "Mid-Term"
 
-    # -----------------------------------------
-    # CONTEXT
-    # -----------------------------------------
 
     context = {
         "student": student,
@@ -312,36 +207,6 @@ def student_dashboard(request, student_id):
     )
 
 
-
-# # login required
-# @student_login_required
-# def student_marks(request, student_id):
-#     student = get_object_or_404(Student.objects.select_related("classroom"), pk=student_id)
-#     marks = (
-#         Marks.objects.filter(student=student)
-#         .select_related("subject")
-#         .order_by("subject__name", "exam_name")
-#     )
-
-#     mark_rows = []
-#     for mark in marks:
-#         full_marks = mark.full_marks or 0
-#         obtained_marks = mark.marks_obtained or 0
-#         percentage = (
-#             round((obtained_marks / full_marks) * 100, 2) if full_marks else 0
-#         )
-#         mark_rows.append(
-#             {
-#                 "subject": mark.subject.name,
-#                 "exam_name": mark.exam_name,
-#                 "marks_obtained": obtained_marks,
-#                 "full_marks": full_marks,
-#                 "percentage": percentage,
-#             }
-#         )
-
-#     context = {"student": student, "mark_rows": mark_rows}
-#     return render(request, "students/student_marks.html", context)
 
 @student_login_required
 def student_marks(request, student_id):
@@ -660,7 +525,11 @@ def student_notice(request, student_id):
     
 # added Logout
 def student_logout(request):
-    request.session.flush()     
+    request.session.flush()   
+    messages.success(
+                request,
+                "Logout successful."
+            )  
     # Optional
     # return redirect("student-lookup")
     return redirect("home")
@@ -776,9 +645,7 @@ def admin_student_report_card(request, student_id):
         pk=student_id
     )
 
-    # -----------------------------------------
     # Get all exams for this student
-    # -----------------------------------------
 
     exam_names = (
         Marks.objects
@@ -788,24 +655,13 @@ def admin_student_report_card(request, student_id):
         .order_by("exam_name")
     )
 
-    # -----------------------------------------
-    # Get selected exam from URL
-    # -----------------------------------------
 
     selected_exam = request.GET.get("exam_name", "").strip()
 
-    # -----------------------------------------
-    # If no exam was selected
-    # use the first available exam
-    # -----------------------------------------
 
     if not selected_exam:
 
         selected_exam = exam_names.first()
-
-    # -----------------------------------------
-    # Get marks for selected exam
-    # -----------------------------------------
 
     marks = (
         Marks.objects
@@ -820,10 +676,7 @@ def admin_student_report_card(request, student_id):
         .order_by("subject__name")
     )
 
-    # -----------------------------------------
-    # Subject rows
-    # -----------------------------------------
-
+ 
     subject_rows = []
 
     total_full_marks = 0
@@ -853,10 +706,7 @@ def admin_student_report_card(request, student_id):
             "percentage": percentage,
         })
 
-    # -----------------------------------------
     # Overall percentage
-    # -----------------------------------------
-
     overall_percentage = (
         round(
             (total_obtained_marks / total_full_marks) * 100,
@@ -865,10 +715,6 @@ def admin_student_report_card(request, student_id):
         if total_full_marks
         else 0
     )
-
-    # -----------------------------------------
-    # Grade
-    # -----------------------------------------
 
     if overall_percentage >= 90:
         grade = "A+"
@@ -888,19 +734,13 @@ def admin_student_report_card(request, student_id):
     else:
         grade = "F"
 
-    # -----------------------------------------
-    # Result
-    # -----------------------------------------
-
+ 
     result = (
         "PASS"
         if overall_percentage >= 40
         else "FAIL"
     )
 
-    # -----------------------------------------
-    # Remarks
-    # -----------------------------------------
 
     if overall_percentage >= 90:
         remarks = "Outstanding Performance"
@@ -920,9 +760,6 @@ def admin_student_report_card(request, student_id):
     else:
         remarks = "Needs Improvement"
 
-    # -----------------------------------------
-    # Context
-    # -----------------------------------------
 
     context = {
 
@@ -962,59 +799,3 @@ def admin_student_report_card(request, student_id):
     )
 
 
-
-
-# def student_attendance(request, student_id):
-#     student = get_object_or_404(Student.objects.select_related("classroom"), pk=student_id)
-#     attendance_records = (
-#         Attendance.objects.filter(student=student)
-#         .order_by("-date")
-#     )
-
-#     present_days = attendance_records.filter(status="PRESENT").count()
-#     absent_days = attendance_records.filter(status="ABSENT").count()
-#     total_days = attendance_records.count()
-#     attendance_percentage = (
-#         round((present_days / total_days) * 100, 2) if total_days else 0
-#     )
-
-#     context = {
-#         "student": student,
-#         "attendance_records": attendance_records,
-#         "present_days": present_days,
-#         "absent_days": absent_days,
-#         "total_days": total_days,
-#         "attendance_percentage": attendance_percentage,
-#     }
-#     return render(request, "students/student_attendance.html", context)
-
-
-
-
-
-# from django.shortcuts import render
-# from students.models import ClassRoom, Student
-# from academics.models import Subject
-
-# # Create your views here.
-
-# def student(request):
-#     classroom = ClassRoom.objects.filter(teacher=request.user).first()
-#     student_count = 0
-#     subject_count = 0
-
-#     students = Student.objects.filter(classroom=classroom)
-
-#     if classroom:
-#         student_count = classroom.students.count()
-#         subject_count = Subject.objects.filter(classroom=classroom).count()
-
-#     context = {
-#         "classroom": classroom,
-#         "student_count": student_count,
-#         "subject_count": subject_count,
-#         "students": students,
-#     }
-#     return render(request, "students/student_list.html", context)
-
-    
