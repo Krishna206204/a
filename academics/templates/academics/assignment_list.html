@@ -55,13 +55,13 @@
           {% for assignment in assignments %}
           <tr>
             <td class="px-5 py-3 font-medium text-slate-900">
-              {{ assignment.title }}
+              {{ assignment.title | title}}
             </td>
 
-            <td class="px-5 py-3">{{ assignment.subject.name }}</td>
+            <td class="px-5 py-3">{{ assignment.subject.name | capfirst}}</td>
 
             <td class="px-5 py-3">
-              {{ assignment.classroom.name }} {% if assignment.classroom.section%} - {{ assignment.classroom.section }} {% endif %}
+              {{ assignment.classroom.name }} {% if assignment.classroom.section %} - {{ assignment.classroom.section |title}} {% endif %}
             </td>
 
             <td class="px-5 py-3">{{ assignment.created_at|date:"M d, Y" }}</td>

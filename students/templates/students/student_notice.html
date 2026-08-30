@@ -32,7 +32,7 @@
                 </p>
 
                 <h2 class="mt-2 text-2xl font-semibold text-slate-900">
-                    {{ student.name }}
+                    {{ student.name |title}}
                 </h2>
 
                 <div class="mt-4 flex flex-wrap gap-3 text-sm text-slate-600">
@@ -44,7 +44,7 @@
 
                     <!-- Classroom -->
                     <span class="rounded-full border border-slate-200 bg-white px-3 py-2">
-                        Classroom: {{ student.classroom }}
+                        Classroom: {{ student.classroom |title }}
                     </span>
 
                 </div>
@@ -117,7 +117,7 @@
                         <!-- Notice Title -->
                         <td class="px-5 py-4 font-semibold text-slate-900">
 
-                            {{ notice.title }}
+                            {{ notice.title |title }}
 
                         </td>
 
@@ -126,7 +126,7 @@
                         <td class="px-5 py-4 text-slate-700">
 
                             <strong>
-                                {{ notice.description|default:"No description provided." }}
+                                {{ notice.description|default:"No description provided."|title }}
                             </strong>
 
                         </td>

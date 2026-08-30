@@ -1,0 +1,261 @@
+{% extends 'adminbase.html' %}
+
+{% block title %}Today's Attendance{% endblock %}
+
+{% block page_label %}Admin Attendance{% endblock %}
+
+{% block page_title %}
+Today's Attendance Summary: {{ today }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="space-y-6">
+
+  <!-- Search and Action Buttons -->
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+
+
+    <!-- Class and Status Search -->
+    <form method="get" class="flex flex-wrap items-center gap-2">
+
+      <!-- Search by Class -->
+      <select
+        name="classroom"
+        class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 outline-none transition focus:border-blue-500"
+      >
+
+        <option value="">
+          All Classes
+        </option>
+
+        {% for classroom in classrooms %}
+
+        <option
+          value="{{ classroom.id }}"
+          {% if selected_classroom == classroom.id|stringformat:"s" %}
+            selected
+          {% endif %}
+        >
+          {{ classroom.name }} - {{ classroom.section |title }}
+        </option>
+
+        {% endfor %}
+
+      </select>
+
+
+      <!-- Search by Attendance Status -->
+      <select
+        name="status"
+        class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 outline-none transition focus:border-blue-500"
+      >
+
+        <option value="">
+          All Status
+        </option>
+
+        <option
+          value="PRESENT"
+          {% if selected_status == "PRESENT" %}
+            selected
+          {% endif %}
+        >
+          Present
+        </option>
+
+        <option
+          value="ABSENT"
+          {% if selected_status == "ABSENT" %}
+            selected
+          {% endif %}
+        >
+          Absent
+        </option>
+
+      </select>
+
+
+      <!-- Search Button -->
+      <button
+        type="submit"
+        class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Search
+      </button>
+
+
+      <!-- Reset Button -->
+      {% if selected_classroom or selected_status %}
+      <a
+        href="{% url 'admin-today-attendance' %}"
+        class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+      >
+        Reset
+      </a>
+      {% endif %}
+
+    </form>
+
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+
+      <!-- Attendance History -->
+      <a
+        href="{% url 'admin-attendance-history' %}"
+        class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
+      >
+        Attendance History
+      </a>
+
+
+      <!-- Mark Attendance -->
+      <a
+        href="{% url 'admin-mark-attendance' %}"
+        class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
+      >
+        Mark Attendance
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- Summary Cards -->
+  <div class="grid gap-4 md:grid-cols-2">
+
+
+    <!-- Present -->
+    <div class="rounded-3xl border border-emerald-200 bg-emerald-50 p-5">
+
+      <p class="text-sm font-medium text-emerald-700">
+        Total Present
+      </p>
+
+      <p class="mt-2 text-3xl font-semibold text-emerald-900">
+        {{ present }}
+      </p>
+
+    </div>
+
+
+    <!-- Absent -->
+    <div class="rounded-3xl border border-rose-200 bg-rose-50 p-5">
+
+      <p class="text-sm font-medium text-rose-700">
+        Total Absent
+      </p>
+
+      <p class="mt-2 text-3xl font-semibold text-rose-900">
+        {{ absent }}
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- Attendance Table -->
+  <div class="overflow-hidden rounded-2xl border border-slate-200">
+
+    <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+
+      <thead class="bg-slate-50 text-slate-600">
+
+        <tr>
+
+          <th class="px-4 py-3 font-semibold">
+            Student
+          </th>
+
+          <th class="px-4 py-3 font-semibold">
+            Class
+          </th>
+
+          <th class="px-4 py-3 font-semibold">
+            Status
+          </th>
+
+          <th class="px-4 py-3 font-semibold">
+            Date
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody class="divide-y divide-slate-200 bg-white">
+
+        {% for attendance in attendance_records %}
+
+        <tr>
+
+          <!-- Student -->
+          <td class="px-4 py-3 font-medium text-slate-900">
+            {{ attendance.student.name|title }}
+          </td>
+
+
+          <!-- Class -->
+          <td class="px-4 py-3">
+
+            {{ attendance.student.classroom.name }}
+            -
+            {{ attendance.student.classroom.section|title }}
+
+          </td>
+
+
+          <!-- Status -->
+          {% if attendance.status == "PRESENT" %}
+
+          <td class="px-4 py-3 font-medium text-emerald-700">
+            Present
+          </td>
+
+          {% else %}
+
+          <td class="px-4 py-3 font-medium text-red-700">
+            Absent
+          </td>
+
+          {% endif %}
+
+
+          <!-- Date -->
+          <td class="px-4 py-3">
+            {{ attendance.date }}
+          </td>
+
+        </tr>
+
+
+        {% empty %}
+
+        <tr>
+
+          <td
+            colspan="4"
+            class="px-4 py-8 text-center text-slate-500"
+          >
+            No attendance records found for today.
+          </td>
+
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+{% endblock %}

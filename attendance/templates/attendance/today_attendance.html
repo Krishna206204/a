@@ -37,7 +37,7 @@
         <tbody class="divide-y divide-slate-200 bg-white">
           {% for attendance in  attendance_records %}
           <tr>
-            <td class="px-4 py-3 font-medium text-slate-900">{{ attendance.student.name }}</td>
+            <td class="px-4 py-3 font-medium text-slate-900">{{ attendance.student.name|title }}</td>
             {% if attendance.status == "PRESENT"  %}
             <td class="px-4 py-3 text-emerald-700">{{ attendance.status }}</td>
             {% else %}

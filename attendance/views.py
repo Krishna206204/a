@@ -108,16 +108,214 @@ def attendance_history(request):
 
 
 
+def admin_mark_attendance(request):
+
+    classrooms = ClassRoom.objects.all().order_by("name", "section")
+
+    selected_classroom = None
+    students = []
+
+    # Get selected classroom from GET or POST
+    classroom_id = (
+        request.GET.get("classroom")
+        or request.POST.get("classroom")
+    )
+
+    if classroom_id:
+        try:
+            selected_classroom = ClassRoom.objects.get(id=classroom_id)
+            students = selected_classroom.students.all()
+        except ClassRoom.DoesNotExist:
+            messages.error(request, "Selected classroom does not exist.")
+
+    # Save attendance
+    if request.method == "POST":
+
+        attendance_date = request.POST.get("date")
+
+        if not selected_classroom:
+            messages.error(request, "Please select a class.")
+            return redirect("admin-mark-attendance")
+
+        for student in students:
+
+            status = request.POST.get(f"student_{student.id}")
+
+            if status:
+                Attendance.objects.update_or_create(
+                    student=student,
+                    date=attendance_date,
+                    defaults={"status": status}
+                )
+
+        messages.success(request, "Attendance saved successfully.")
+
+        return redirect(
+            f"/attendance/admin/mark/?classroom={selected_classroom.id}"
+        )
+
+    context = {
+        "classrooms": classrooms,
+        "selected_classroom": selected_classroom,
+        "students": students,
+        "today": date.today(),
+    }
+
+    return render(
+        request,
+        "attendance/admin_attendance_form.html",
+        context,
+    )
 
 
 
 
 
 
+def admin_attendance_history(request):
+
+    from_date = request.GET.get("from")
+    to_date = request.GET.get("to")
+    classroom_id = request.GET.get("classroom")
+
+    # All classrooms for admin dropdown
+    classrooms = ClassRoom.objects.all().order_by("name", "section")
+
+    # Admin can see all attendance records
+    queryset = Attendance.objects.all()
+
+    # Filter by class
+    if classroom_id:
+        queryset = queryset.filter(
+            student__classroom_id=classroom_id
+        )
+
+    # Filter by from date
+    if from_date:
+        queryset = queryset.filter(date__gte=from_date)
+
+    # Filter by to date
+    if to_date:
+        queryset = queryset.filter(date__lte=to_date)
+
+    # Group attendance by date and classroom
+    attendance_records = (
+        queryset.values(
+            "date",
+            "student__classroom__name",
+            "student__classroom__section",
+        )
+        .annotate(
+            present_count=Count(
+                "id",
+                filter=Q(status="PRESENT")
+            ),
+            absent_count=Count(
+                "id",
+                filter=Q(status="ABSENT")
+            ),
+        )
+        .order_by("-date")
+    )
+
+    # Calculate attendance percentage
+    for record in attendance_records:
+
+        total = (
+            record["present_count"]
+            + record["absent_count"]
+        )
+
+        if total > 0:
+            record["attendance_percentage"] = round(
+                (record["present_count"] / total) * 100,
+                2,
+            )
+        else:
+            record["attendance_percentage"] = 0
+
+    context = {
+        "attendance_records": attendance_records,
+        "classrooms": classrooms,
+        "selected_classroom": classroom_id,
+        "from_date": from_date,
+        "to_date": to_date,
+    }
+
+    return render(
+        request,
+        "attendance/admin_attendance_history.html",
+        context,
+    )
 
 
 
+def admin_today_attendance(request):
 
+    today = date.today()
+
+    # Get filters
+    classroom_id = request.GET.get("classroom")
+    status = request.GET.get("status")
+
+    # Get all classrooms
+    classrooms = ClassRoom.objects.all().order_by(
+        "name",
+        "section"
+    )
+
+    # Get today's attendance
+    attendance_records = Attendance.objects.filter(
+        date=today
+    ).select_related(
+        "student",
+        "student__classroom"
+    )
+
+    # Filter by classroom
+    if classroom_id:
+        attendance_records = attendance_records.filter(
+            student__classroom_id=classroom_id
+        )
+
+    # Filter by attendance status
+    if status in ["PRESENT", "ABSENT"]:
+        attendance_records = attendance_records.filter(
+            status=status
+        )
+
+    # Order records
+    attendance_records = attendance_records.order_by(
+        "student__classroom__name",
+        "student__classroom__section",
+        "student__name"
+    )
+
+    # Count present
+    present = attendance_records.filter(
+        status="PRESENT"
+    ).count()
+
+    # Count absent
+    absent = attendance_records.filter(
+        status="ABSENT"
+    ).count()
+
+    context = {
+        "attendance_records": attendance_records,
+        "today": today,
+        "present": present,
+        "absent": absent,
+        "classrooms": classrooms,
+        "selected_classroom": classroom_id,
+        "selected_status": status,
+    }
+
+    return render(
+        request,
+        "attendance/admin_today_attendance.html",
+        context
+    )
 
 
 

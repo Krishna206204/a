@@ -11,4 +11,16 @@ urlpatterns = [
     
     path("notices/", views.notice_list, name="notice-list"),
     path('assignment/delete/<int:id>/',views.delete_assignment,name="delete_assignment"),
+    
+    path(
+        "admin/notices/",
+        views.admin_notice_list,
+        name="admin-notice-list"
+    ),
+     
+    path(
+        "admin/notices/add/",
+        views.admin_add_notice,
+        name="admin-add-notice"
+    ),
 ]

@@ -55,6 +55,57 @@ def notice_list(request):
             "notice_list": notices
         }
     )
+    
+
+
+def admin_notice_list(request):
+
+    notices = (
+        Notice.objects
+        .all()
+        .order_by("-created_at")
+    )
+
+    return render(
+        request,
+        "academics/admin_notice_list.html",
+        {
+            "notice_list": notices
+        }
+    )
+    
+    
+    
+def admin_add_notice(request):
+
+    if request.method == "POST":
+
+        title = request.POST.get("title", "").strip()
+        description = request.POST.get("description", "").strip()
+
+        if not title:
+            messages.error(request, "Notice title is required.")
+            return render(
+                request,
+                "academics/admin_add_notice.html"
+            )
+
+        Notice.objects.create(
+            title=title,
+            description=description
+        )
+
+        messages.success(
+            request,
+            "Notice published successfully."
+        )
+
+        return redirect("admin-notice-list")
+
+    return render(
+        request,
+        "academics/admin_add_notice.html"
+    )
 
 
 def add_marks(request):

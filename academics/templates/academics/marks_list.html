@@ -42,7 +42,7 @@
 
             {% for subject in subjects %}
             <option value="{{ subject.id }}" {% if selected_subject == subject.id|stringformat:"s" %} selected {% endif %}>
-              {{ subject.name }}
+              {{ subject.name |title}}
             </option>
             {% endfor %}
           </select>
@@ -60,7 +60,7 @@
             </option>
 
             {% for exam in exam_names %}
-            <option value="{{ exam }}" {% if selected_exam == exam %} selected {% endif %}>
+            <option value="{{ exam |title}}" {% if selected_exam == exam %} selected {% endif %}>
               {{ exam }}
             </option>
             {% endfor %}
@@ -113,15 +113,15 @@
           <tr>
 
             <td class="px-5 py-3 font-medium text-slate-900">
-              {{ mark.student.name }}
+              {{ mark.student.name |title}}
             </td>
 
             <td class="px-5 py-3">
-              {{ mark.subject.name }}
+              {{ mark.subject.name |title }}
             </td>
 
             <td class="px-5 py-3">
-              {{ mark.exam_name }}
+              {{ mark.exam_name |title }}
             </td>
 
             <td class="px-5 py-3">

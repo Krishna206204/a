@@ -82,7 +82,7 @@
           {% for item in students_results %}
           <tr>
             <td class="px-5 py-3 font-medium text-slate-900">{{ item.student.id }}</td>
-            <td class="px-5 py-3 font-medium text-slate-900">{{ item.student.name }}</td>
+            <td class="px-5 py-3 font-medium text-slate-900">{{ item.student.name |title}}</td>
             <td class="px-5 py-3">{{ item.total_marks }}</td>
             <td class="px-5 py-3">{{ item.obtained_marks }}</td>
             <td class="px-5 py-3">{{ item.percentage|floatformat:2 }}%</td>
@@ -98,12 +98,15 @@
                 {{ item.grade }}
               </span>
             </td>
-            <td class="px-5 py-3">
-              <a href="{{ item.report_url }}"
-                class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50">
-                View Report Card
-              </a>
-            </td>
+          <td class="px-5 py-3">
+    <a
+        href="{{ item.report_url }}"
+        class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+    >
+        <i class="fas fa-file-alt text-xs"></i>
+        <span>View Report Card</span>
+    </a>
+</td>
           </tr>
           {% empty %}
           <tr>

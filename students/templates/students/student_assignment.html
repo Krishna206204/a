@@ -33,7 +33,7 @@
                 </p>
 
                 <h2 class="mt-2 text-2xl font-semibold text-slate-900">
-                    {{ student.name }}
+                    {{ student.name |title }}
                 </h2>
 
 
@@ -47,7 +47,7 @@
 
                     <!-- Classroom -->
                     <span class="rounded-full border border-slate-200 bg-white px-3 py-2">
-                        Classroom: {{ student.classroom }}
+                        Classroom: {{ student.classroom |title}}
                     </span>
 
                 </div>
@@ -110,7 +110,7 @@
                         <!-- Assignment Title -->
                         <td class="px-5 py-3 font-medium text-slate-900">
 
-                            {{ record.title }}
+                            {{ record.title |title}}
 
                         </td>
 
@@ -118,7 +118,7 @@
                         <!-- Assignment Description -->
                         <td class="px-5 py-3">
 
-                            {{ record.description }}
+                            {{ record.description |title }}
 
                         </td>
 
@@ -126,7 +126,7 @@
                         <!-- Subject -->
                         <td class="px-5 py-3">
 
-                            {{ record.subject }}
+                            {{ record.subject |title}}
 
                         </td>
 

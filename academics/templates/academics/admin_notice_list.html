@@ -1,43 +1,41 @@
-{% extends 'base.html' %}
+{% extends "adminbase.html" %}
 
 {% block title %}
-    Teacher Notices
+    Published Notices
 {% endblock %}
-
 
 {% block page_label %}
-    Teacher
+    Administration
 {% endblock %}
-
 
 {% block page_title %}
-    Notices
+    Published Notices
 {% endblock %}
-
 
 {% block content %}
 
 <div class="space-y-6">
 
-    <!-- Teacher Information -->
+
+    <!-- Admin Information -->
     <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
 
         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 
-            <!-- Teacher Details -->
+
+            <!-- Administrator Details -->
             <div>
 
                 <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
-                    Teacher
+                    Administrator
                 </p>
 
                 <h2 class="mt-2 text-2xl font-semibold text-slate-900">
-                    {{ request.user.username |title}}
+                    {{ request.user.username|title }}
                 </h2>
 
                 <div class="mt-4 flex flex-wrap gap-3 text-sm text-slate-600">
 
-                    <!-- Email -->
                     <span class="rounded-full border border-slate-200 bg-white px-3 py-2">
                         Email: {{ request.user.email }}
                     </span>
@@ -46,31 +44,56 @@
 
             </div>
 
+
+            <!-- Add Notice Button -->
+            <div class="flex items-center">
+
+                <a
+                    href="{% url 'admin-add-notice' %}"
+                    class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                >
+
+                    <span class="mr-2 text-lg leading-none">
+                        +
+                    </span>
+
+                    Add Notice
+
+                </a>
+
+            </div>
+
+
         </div>
 
     </div>
 
 
-    <!-- Notice Records -->
+
+    <!-- All Published Notices -->
     <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
 
         <!-- Header -->
         <div class="border-b border-slate-200 bg-slate-50 px-5 py-4">
 
             <h2 class="text-lg font-semibold text-slate-900">
-                School Notices
+                All Published Notices
             </h2>
 
             <p class="mt-1 text-sm text-slate-500">
-                View the latest notices and announcements published by the administration.
+                View all notices and announcements published by the administration.
             </p>
 
         </div>
 
 
+
+        <!-- Table -->
         <div class="overflow-x-auto">
 
             <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+
 
                 <!-- Table Header -->
                 <thead class="bg-slate-50 text-slate-600">
@@ -94,29 +117,41 @@
                 </thead>
 
 
+
                 <!-- Table Body -->
                 <tbody class="divide-y divide-slate-200 bg-white text-slate-700">
+
 
                     {% for notice in notice_list %}
 
                     <tr class="transition hover:bg-slate-50">
 
+
                         <!-- Date -->
-                        <td class="px-5 py-4 whitespace-nowrap text-slate-600">
+                        <td class="whitespace-nowrap px-5 py-4 text-slate-600">
+
                             {{ notice.created_at|date:"l, M d, Y" }}
+
                         </td>
 
 
-                        <!-- Notice Title -->
+
+                        <!-- Title -->
                         <td class="px-5 py-4 font-semibold text-slate-900">
-                            {{ notice.title |title }}
+
+                            {{ notice.title|title }}
+
                         </td>
 
 
-                        <!-- Notice Description -->
+
+                        <!-- Description -->
                         <td class="px-5 py-4 text-slate-700">
-                            {{ notice.description|default:"No description provided." |title}}
+
+                            {{ notice.description|default:"No description provided."|title }}
+
                         </td>
+
 
                     </tr>
 
@@ -129,12 +164,16 @@
                             colspan="3"
                             class="px-5 py-10 text-center text-slate-500"
                         >
-                            No notices are available at the moment.
+
+                            No notices have been published yet.
+
                         </td>
 
                     </tr>
 
+
                     {% endfor %}
+
 
                 </tbody>
 
@@ -143,6 +182,7 @@
         </div>
 
     </div>
+
 
 </div>
 
