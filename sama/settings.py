@@ -145,9 +145,20 @@ JAZZMIN_SETTINGS = {
     # Brand name
     "site_brand": "Jhime Secondary School",
 
-    # Welcome message on dashboard
+    # Welcome message
     "welcome_sign": "Welcome to SAMS Administration",
 
     # Footer copyright
     "copyright": "Jhime",
+
+
+    # Link inside user/profile dropdown
+    "usermenu_links": [
+        {
+            "name": "Admin Login",
+            "url": "admin-login",
+            "icon": "fas fa-sign-in-alt",
+            "new_window": False,
+        },
+    ],
 }
