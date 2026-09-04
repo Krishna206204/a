@@ -39,6 +39,68 @@ def assignment_list(request):
     )
 
 
+def delete_assignment(request,id):
+    assignment = get_object_or_404(Assignment, id=id)
+    assignment.delete()
+    messages.success(request, "Assignment Deleted Successfully")
+    return redirect(request.META.get("HTTP_REFERER"))
+
+
+
+def edit_assignment(request, id):
+    # Get the assignment only if it belongs to the logged-in teacher's classroom
+    assignment = get_object_or_404(
+        Assignment,
+        id=id,
+        classroom__teacher=request.user
+    )
+
+    classroom = assignment.classroom
+
+    # Only subjects belonging to this classroom
+    subjects = Subject.objects.filter(classroom=classroom)
+
+    if request.method == "POST":
+
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        subject_id = request.POST.get("subject")
+
+        # Make sure the selected subject belongs to the teacher's classroom
+        subject = get_object_or_404(
+            Subject,
+            id=subject_id,
+            classroom=classroom
+        )
+
+        assignment.title = title
+        assignment.description = description
+        assignment.subject = subject
+
+        # Classroom is not changed
+        assignment.classroom = classroom
+
+        assignment.save()
+
+        messages.success(
+            request,
+            "Assignment Updated Successfully"
+        )
+
+        return redirect("assignment-list")
+
+    context = {
+        "assignment": assignment,
+        "classroom": classroom,
+        "subjects": subjects,
+    }
+
+    return render(
+        request,
+        "academics/assignment_edit.html",
+        context
+    )
+
 
 def notice_list(request):
 
@@ -396,9 +458,4 @@ def student_results(request):
 
 
 
-def delete_assignment(request,id):
-    assignment = get_object_or_404(Assignment, id=id)
-    assignment.delete()
-    messages.success(request, "Assignment Deleted Successfully")
-    return redirect(request.META.get("HTTP_REFERER"))
 
