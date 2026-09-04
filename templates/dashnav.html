@@ -1,4 +1,4 @@
-<nav class="bg-slate-800 text-slate-100 shadow-md">
+<nav class="fixed top-0 left-0 z-50 w-full bg-blue-800 text-blue-700 shadow-md">
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -30,6 +30,7 @@
                    class="text-slate-200 hover:text-white transition">
                     Contact
                 </a>
+
                 <a href="{% url 'notice-dash' %}"
                    class="text-slate-200 hover:text-white transition">
                     Notice
@@ -78,6 +79,11 @@
                     Contact
                 </a>
 
+                <a href="{% url 'notice-dash' %}"
+                   class="rounded-lg px-4 py-2 text-slate-200 hover:bg-white/10 hover:text-white">
+                    Notice
+                </a>
+
                 <a href="{% url 'login' %}"
                    class="rounded-lg px-4 py-2 text-slate-200 hover:bg-white/10 hover:text-white">
                     Login
@@ -104,33 +110,3 @@
     });
 
 </script>
-
-
-
-
-
-
-
-
-
-{% comment %} <nav class="bg-slate-800 text-slate-100 shadow-md">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-            <div class="flex items-center">
-                <a href="{% url 'home' %}" class="text-xl font-semibold tracking-wide text-white">
-                   Jhime Malika Secondary School
-                </a>
-            </div>
-
-            
-            <div class="flex items-center space-x-6">
-                <a href="{% url 'home' %}" class="text-slate-200 hover:text-white transition">Home</a>
-                <a href="{% url 'about' %}" class="text-slate-200 hover:text-white transition">About</a>
-                <a href="{% url 'contact' %}" class="text-slate-200 hover:text-white transition">Contact</a>
-                <a href="{% url 'login' %}" class="text-slate-200 hover:text-white transition">Login</a>
-                
-
-            </div>
-        </div>
-    </div>
-</nav> {% endcomment %}
