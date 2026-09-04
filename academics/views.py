@@ -56,6 +56,23 @@ def notice_list(request):
         }
     )
     
+    
+def notice(request):
+
+    notices = (
+        Notice.objects
+        .all()
+        .order_by("-created_at")
+    )
+
+    return render(
+        request,
+        "academics/notice.html",
+        {
+            "notices": notices
+        }
+    )
+    
 
 
 def admin_notice_list(request):

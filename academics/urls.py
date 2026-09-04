@@ -10,6 +10,9 @@ urlpatterns = [
     path("report-card/<int:student_id>/<str:exam_name>/", views.report_card, name="report-card"),
     
     path("notices/", views.notice_list, name="notice-list"),
+    
+    path("das/notices/", views.notice, name="notice-dash"),
+    
     path('assignment/delete/<int:id>/',views.delete_assignment,name="delete_assignment"),
     
     path(
