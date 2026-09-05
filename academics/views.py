@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from .models import Assignment, Marks, Subject,Notice
 from students.models import ClassRoom, Student
 
-
+@login_required
 def add_assignment(request):
     classroom = ClassRoom.objects.filter(teacher=request.user).first()
 
@@ -27,7 +28,7 @@ def add_assignment(request):
     context = {"classroom": classroom, "subjects": subjects}
     return render(request, "academics/assignment_form.html", context)
 
-
+@login_required
 def assignment_list(request):
     assignments = (
         Assignment.objects.filter(classroom__teacher=request.user)
@@ -38,7 +39,7 @@ def assignment_list(request):
         request, "academics/assignment_list.html", {"assignments": assignments}
     )
 
-
+@login_required
 def delete_assignment(request,id):
     assignment = get_object_or_404(Assignment, id=id)
     assignment.delete()
@@ -46,7 +47,7 @@ def delete_assignment(request,id):
     return redirect(request.META.get("HTTP_REFERER"))
 
 
-
+@login_required
 def edit_assignment(request, id):
     # Get the assignment only if it belongs to the logged-in teacher's classroom
     assignment = get_object_or_404(
@@ -101,7 +102,7 @@ def edit_assignment(request, id):
         context
     )
 
-
+@login_required
 def notice_list(request):
 
     notices = (
@@ -186,7 +187,7 @@ def admin_add_notice(request):
         "academics/admin_add_notice.html"
     )
 
-
+@login_required
 def add_marks(request):
     classroom = ClassRoom.objects.filter(teacher=request.user).first()
     if not classroom:
@@ -220,7 +221,7 @@ def add_marks(request):
     context = {"classroom": classroom, "students": students, "subjects": subjects}
     return render(request, "academics/marks_form.html", context)
 
-
+@login_required
 def view_marks(request):
     classroom = ClassRoom.objects.filter(teacher=request.user).first()
     marks = Marks.objects.none()
@@ -356,6 +357,7 @@ def report_card(request, student_id, exam_name):
     }
 
     return render(request, "academics/report_card.html", context)
+
 
 def student_results(request):
     classroom = ClassRoom.objects.filter(teacher=request.user).first()

@@ -5,16 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Portal</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
 
   <body class="min-h-screen bg-slate-50 text-slate-800">
-    <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-slate-100 px-4 py-6 sm:px-6 lg:px-8">
-
-      <div class="w-full max-w-xl rounded-[1.5rem] border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur sm:p-8">
+    <div
+      class="flex min-h-screen items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-slate-100 px-4 py-6 sm:px-6 lg:px-8"
+    >
+      <div
+        class="w-full max-w-xl rounded-[1.5rem] border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur sm:p-8"
+      >
+        <a
+          href="{% url 'login-selection' %}"
+          class="absolute -top-0 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-xl bg-blue-500 px-4 py-1 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-600"
+        >
+        <i class="fa-solid fa-arrow-left"></i>
+          <p>Back</p>
+        </a>
 
         <div class="text-center">
-          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-xl font-semibold text-white">
+          <div
+            class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-xl font-semibold text-white"
+          >
             S
           </div>
 
@@ -34,7 +52,8 @@
           <div>
             <label
               for="student_id"
-              class="mb-1.5 block text-sm font-medium text-slate-700">
+              class="mb-1.5 block text-sm font-medium text-slate-700"
+            >
               Student ID
             </label>
 
@@ -52,7 +71,8 @@
           <div>
             <label
               for="date_of_birth"
-              class="mb-1.5 block text-sm font-medium text-slate-700">
+              class="mb-1.5 block text-sm font-medium text-slate-700"
+            >
               Date of birth
             </label>
 
@@ -69,7 +89,9 @@
           </div>
 
           {% if error_message %}
-          <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm text-red-700">
+          <div
+            class="rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm text-red-700"
+          >
             {{ error_message }}
           </div>
           {% endif %}
@@ -77,24 +99,23 @@
           <!-- Login Button -->
           <button
             type="submit"
-            class="w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">
+            class="w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
             Continue to Dashboard
           </button>
         </form>
 
-        {% comment %} added manually {% endcomment %}
         <div class="mt-5 text-center">
-          <p class="text-sm text-slate-600">
-            Are you a teacher?
-          </p>
+          <p class="text-sm text-slate-600">Are you a teacher?</p>
 
-          <a href="{% url 'login' %}"
-            class="mt-2 inline-flex items-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+          <a
+            href="{% url 'login' %}"
+            class="mt-2 inline-flex items-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+          >
             <i class="fa-solid fa-user-tie mr-2"></i>
             Teacher Login
           </a>
         </div>
-
       </div>
     </div>
   </body>

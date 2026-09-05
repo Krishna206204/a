@@ -6,6 +6,10 @@ from django.contrib import messages
 from academics.models import Subject
 from .models import User
 
+
+def login_selection(request):
+    return render(request, "accounts/login_page.html")
+
 def home(request):
     return render(request,"accounts/home.html")
 
@@ -119,7 +123,6 @@ def admin_login(request):
 
             return redirect("admin-login")
 
-        # Login admin
         login(request, user)
 
         messages.success(

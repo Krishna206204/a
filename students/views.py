@@ -93,6 +93,8 @@ def student_lookup(request):
                 date_of_birth=date_of_birth,
             )
             request.session["student_id"] = student.id
+            messages.success(request, "Login successful")
+
             return redirect(
                 "student-dashboard",
                 student_id=student.id
@@ -530,15 +532,11 @@ def student_logout(request):
                 request,
                 "Logout successful."
             )  
-    # Optional
-    # return redirect("student-lookup")
     return redirect("home")
 
 
 
 # admin
-
-
 @login_required
 def admin_students(request):
     # Get all students in the school
@@ -565,9 +563,6 @@ def admin_students(request):
     }
 
     return render(request, "students/admin_student.html", context)
-
-
-
 
 
 @login_required
